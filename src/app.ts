@@ -52,3 +52,20 @@ function handleClickEvent(this:HTMLAnchorElement, event: Event) {
     console.log(this.href);
 }
 element.addEventListener('click', handleClickEvent, false);
+
+//typeof - Once you have an obj/var with a structure you can easily create a type from that structure 
+const person = {
+    name: 'Lakshmi',
+    age: 31
+}
+
+type PersonType = typeof person;
+//To write a function that accepts an object that looks like person we can do something like this.
+function printPersonDetails(person:PersonType) {
+    console.log(person.name);
+    console.log(person.age);
+}
+
+printPersonDetails(person);
+//printPersonDetails({name: 'XYZ'}); //error as age is missing
+printPersonDetails({name: 'XYZ', age:25});
