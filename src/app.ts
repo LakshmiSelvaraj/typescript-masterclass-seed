@@ -171,3 +171,54 @@ printItemNameWithCustomGuard(new Song('GoodMorning Sunshine'));
 //Literal types
 const foo = 'bar'; //Hover over foo will show that the type of foo is bar
 let foo1 = 'bar'; //Hover over foo1 will show that the type of foo1 is string
+
+//Intersection types
+interface Order {
+    id: string,
+    currency: string,
+    amount: string
+}
+
+interface Stripe {
+    type: 'stripe'
+    card: string,
+    cvv: string
+}
+
+interface Paypal {
+    type:'paypal'
+    email: string
+}
+
+type CheckoutCard = Order & Stripe;
+type CheckoutPaypal = Order & Paypal;
+
+const order = {
+    id: "aasid2",
+    amount: "100",
+    currency: "AUD"
+}
+
+const orderWithCard: CheckoutCard = {
+    ...order,
+    type: 'stripe',
+    card: "1000 2000 4000 3000",
+    cvv: "100"
+}
+
+const orderWithPaypal: CheckoutPaypal = {
+    ...order,
+    type: 'paypal',
+    email: "abc@xyz.com"
+}
+
+function processOrder(payload: CheckoutCard | CheckoutPaypal) {
+    if(payload.type === 'stripe') {
+        console.log("Processing order via stripe card");
+    } else {
+        console.log("Processing order via paypal");
+    }
+}
+
+processOrder(orderWithCard);
+processOrder(orderWithPaypal);
