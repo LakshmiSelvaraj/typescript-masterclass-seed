@@ -69,3 +69,12 @@ function printPersonDetails(person:PersonType) {
 printPersonDetails(person);
 //printPersonDetails({name: 'XYZ'}); //error as age is missing
 printPersonDetails({name: 'XYZ', age:25});
+
+//keyof
+type PersonKeysType = keyof PersonType;
+function getPersonKeysType(personKey: PersonKeysType) {
+    console.log(personKey);
+}
+getPersonKeysType('name');
+getPersonKeysType('age');
+//getPersonKeysType('naem');//ERROR
