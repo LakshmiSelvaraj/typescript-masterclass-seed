@@ -123,7 +123,8 @@ let dictionary:Record<string, string>
 
 //typeof, instanceof and custom type guards
 class Song {
-    constructor(public name:string, public duration?: string | number) {}
+    constructor(public name:string, public duration?: string | number) {
+    }
     
     printSong() {
         if(typeof this.duration === 'string') {
@@ -155,6 +156,18 @@ function printItemName(item: Song | Playlist) {
 }
 printItemName(new Song('GoodMorning Sunshine'));
 
-function isItemSong(item: any) : item is Song {
-    return item.name !== undefined;
+function isItemSong(item: Song | Playlist) : item is Song {
+    return 'name' in item;
 }
+
+function printItemNameWithCustomGuard(item: Song | Playlist) {
+    if(isItemSong(item)) {  //For custom type guard use : isItemSong(item)
+        console.log(`Song is: ${item.name}`);
+    } else {
+        console.log(`Playlist is: ${item.title}`);
+    }
+}
+printItemNameWithCustomGuard(new Song('GoodMorning Sunshine'));
+//Literal types
+const foo = 'bar'; //Hover over foo will show that the type of foo is bar
+let foo1 = 'bar'; //Hover over foo1 will show that the type of foo1 is string
