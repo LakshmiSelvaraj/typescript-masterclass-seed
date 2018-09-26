@@ -123,7 +123,7 @@ let dictionary:Record<string, string>
 
 //typeof, instanceof and custom type guards
 class Song {
-    constructor(public name:string, public duration: string | number) {}
+    constructor(public name:string, public duration?: string | number) {}
     
     printSong() {
         if(typeof this.duration === 'string') {
@@ -143,13 +143,18 @@ const newSongDurationAsNum = new Song('Good morning sunshine Extended!', 1223000
 newSongDurationAsNum.printSong();
 
 class Playlist {
-    constructor(public title:string) {}
+    constructor(public title:string, public duration:number) {}
 }
 
 function printItemName(item: Song | Playlist) {
-    if(item instanceof Song) {
-        console.log(item.name);
+    if(item instanceof Song) {  //For custom type guard use : isItemSong(item)
+        console.log(`Song is: ${item.name}`);
     } else {
-        console.log(item.title);
+        console.log(`Playlist is: ${item.title}`);
     }
+}
+printItemName(new Song('GoodMorning Sunshine'));
+
+function isItemSong(item: any) : item is Song {
+    return item.name !== undefined;
 }
