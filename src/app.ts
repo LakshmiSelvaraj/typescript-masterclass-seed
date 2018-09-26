@@ -1,4 +1,4 @@
-function globalFunction(welcomeMessage) {
+function globalFunction(this:any, welcomeMessage) {
     console.log(welcomeMessage);
     //Function invoked from the global scope and hence "this" will be the Window object
     console.log(this);
@@ -41,3 +41,14 @@ globalFunction.apply(obj, ['Hello from "apply" where the argument list needs to 
 const boundObjFunction = globalFunction.bind(obj);
 boundObjFunction( 'Hello from bound function using the bind keyword called first time');
 boundObjFunction( 'Hello from bound function using the bind keyword called second time');
+
+//Typing 'this'; If we want to be truly typesafe with this, then we can strongly type this by specifying the type as the first
+//argument to any function. noImplicitThis when set to true in tsconfig.json, will call out places in the code where the type of this
+//is being inferred.
+const element = document.querySelector('.click');
+function handleClickEvent(this:HTMLAnchorElement, event: Event) {
+    event.preventDefault();
+    console.log("Inside the click event handler");
+    console.log(this.href);
+}
+element.addEventListener('click', handleClickEvent, false);
