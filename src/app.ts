@@ -265,3 +265,28 @@ function reverse(stringOrArray: string | any[]):string | any[] {
 
 console.log(reverse('Hello'));
 console.log(reverse(['hello', 'sunshine']));
+
+//ENUMS - The values defined here become the keys and the value is actually numeric 0,1,2
+enum Sizes {
+    Small,
+    Medium,
+    Large
+}
+console.log(`Large pizza's numeric value: ${Sizes.Large}`);
+//enums provide something called reverse mapping which enables us to do the following to get the string value
+//console.log(`Pizza size: ${Sizes[Sizes.Large]}`);
+//You can stack enums like below - Note that we have to give a number here as when typescript compiles it tries to build on the
+//existing Sizes object and when we say ExtraLarge without an index, it tries to assign 0 again which makes it throw an error.
+enum Sizes {
+    //ExtraLarge,
+    ExtraLarge = 3
+}
+
+//String enums - We can define strings for the values in the enum but we will miss out on the reverse mapping capability
+enum SizesString {
+    Small = 'small',
+    Medium = 'medium',
+    Large = 'large'
+}
+
+console.log(`Large pizza's string value: ${SizesString.Large}`); //Note that this will print out large in lowercase as Large will be the index.
