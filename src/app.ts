@@ -78,3 +78,45 @@ function getPersonKeysType(personKey: PersonKeysType) {
 getPersonKeysType('name');
 getPersonKeysType('age');
 //getPersonKeysType('naem');//ERROR
+
+//Mapped types - all of these types are available built in Typescript too
+interface PersonInterface {
+    name: string,
+    age: number,
+    address: {}
+    nickname?: string
+}
+//To create a readonly Person interface type
+type ReadOnlyType<T> = {
+    readonly [P in keyof T] : T[P];
+}
+
+const readOnlyPerson: ReadOnlyType<PersonInterface> = {
+    name: 'Lakshmi',
+    age: 31,
+    address: {}
+}
+//readOnlyPerson.name = 'XYZ'; //ERROR as readonly
+
+//To create a partial Person interface type
+type PartialType<T> = {
+    [P in keyof T]?: T[P];//can also be written as [P in keyof T]+?:T[P]
+}
+const partialPerson: PartialType<PersonInterface> = {
+    name: 'XYZ'
+}
+
+//To create a fully required Person interface type
+// type RequiredType<T> = {
+//     [P in keyof T]-?: T[P];
+// }
+
+type PickPerson<T, K extends keyof T> = {
+    [P in K]: T[P];
+}
+const pickedPerson: PickPerson<PersonInterface, 'name' | 'age'> = {
+    name: 'Lakshmi',
+    age: 31
+}
+//Check out the built in Record mapped type
+let dictionary:Record<string, string>
