@@ -219,6 +219,31 @@ function processOrder(payload: CheckoutCard | CheckoutPaypal) {
         console.log("Processing order via paypal");
     }
 }
-
 processOrder(orderWithCard);
 processOrder(orderWithPaypal);
+
+//GENERICS
+class List<T> {
+    public items:T[];
+    constructor() {}
+
+    getItems(): T[] {
+        return this.items;
+    }
+
+    addItem(item: T):void {
+        this.items.push(item);
+    }
+}
+
+class Pizza {
+    constructor(private name:string, toppings: number){}
+}
+class Coupons {
+    constructor(private couponName:string) {}
+}
+
+const pizzaList:List<Pizza> = new List();
+pizzaList.addItem(new Pizza('Blazing Inferno', 2));
+const couponList: List<Coupons> = new List();
+couponList.addItem(new Coupons('PIZZA25'));
