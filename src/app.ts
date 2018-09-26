@@ -224,8 +224,10 @@ processOrder(orderWithPaypal);
 
 //GENERICS
 class List<T> {
-    public items:T[];
-    constructor() {}
+    private items:T[];
+    constructor() {
+        this.items = [];
+    }
 
     getItems(): T[] {
         return this.items;
@@ -247,3 +249,19 @@ const pizzaList:List<Pizza> = new List();
 pizzaList.addItem(new Pizza('Blazing Inferno', 2));
 const couponList: List<Coupons> = new List();
 couponList.addItem(new Coupons('PIZZA25'));
+
+//Function overloading - declaring the different overloads of the function before defining them gives good intellisense
+//when we call the function. The order in which the overloaded functions are defined affect the order in which the intellisense
+//helps with the function parameters
+function reverse(item: string):string;
+function reverse<T>(itemArray: T[]): T[];
+
+function reverse(stringOrArray: string | any[]):string | any[] {
+    if(typeof stringOrArray === 'string') {
+        return stringOrArray.split('').reverse().join('');
+    }
+    return stringOrArray.slice().reverse(); //reverse mutates the array - slice clones the array so that we dont modify the original array
+}
+
+console.log(reverse('Hello'));
+console.log(reverse(['hello', 'sunshine']));
